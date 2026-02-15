@@ -15,6 +15,10 @@ pipeline {
                     // Find all files in the current workspace
                     def files = findFiles(glob: '**/*.*')
                     echo "Found ${files.length} files."
+
+                    for (int i = 0; i < files.length; i++) {
+                    echo "File: ${files[i].name}, Path: ${files[i].path}, Length: ${files[i].length}"
+                    }
                     }
             }
         }
