@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Check Out The Code') {
             steps {
+                echo 'In this stage code will be cloned'
                 git branch: 'main',
                 url: 'https://github.com/rajudonkeshwar/devops-practice-01.git'
             }
