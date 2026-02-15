@@ -7,6 +7,7 @@ pipeline {
                 echo 'In this stage code will be cloned'
                 git branch: 'main',
                 url: 'https://github.com/rajudonkeshwar/devops-practice-01.git'
+                sh 'pwd'
             }
         }
         stage('Checking the files inside my git folder') {
@@ -16,6 +17,7 @@ pipeline {
                     // Find all files in the current workspace
                     def files = findFiles(glob: '**/*.*')
                     echo "Found ${files.length} files."
+                    sh 'pwd'
                     }
             }
         }
