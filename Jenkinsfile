@@ -30,7 +30,6 @@ pipeline {
                 sh '''
                     cd Java-Login-App
                     mvn -B -DskipTests clean package
-                    cd ls -la
 
                     '''
                 // Add your deployment commands here, e.g., sh './deploy.sh'
