@@ -5,8 +5,7 @@ pipeline {
         stage('Check Out The Code') {
             steps {
                 git branch: 'main',
-                credentialsId: '12345-1234-4696-af25-123455',
-                url: 'ssh://git@bitbucket.org:company/repo.git'
+                url: 'https://github.com/rajudonkeshwar/devops-practice-01.git'
             }
         }
         stage('Test') {
