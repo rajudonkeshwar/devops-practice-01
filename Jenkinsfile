@@ -11,20 +11,21 @@ pipeline {
         }
         stage('Checking the files inside my git folder') {
             steps {
+                    // If you want to mention groovy code then you should use script block
                     script {
                     // Find all files in the current workspace
                     def files = findFiles(glob: '**/*.*')
                     echo "Found ${files.length} files."
-
-                    for (int i = 0; i < files.length; i++) {
-                    echo "File: ${files[i]}, Path: ${files[i].path}, Length: ${files[i].length}"
-                    }
                     }
             }
         }
-        stage('Deploy') {
+        stage('build') {
             steps {
-                echo 'Deploying the application...'
+                // Yes, the sh command is a fundamental Pipeline step that can be used 
+                // in both Declarative and Scripted Jenkins Pipelines.
+                echo 'Building the code using maven'
+                sh ' cd Java-Login-App '
+                sh 'mvn -B -DskipTests clean package'
                 // Add your deployment commands here, e.g., sh './deploy.sh'
             }
         }
