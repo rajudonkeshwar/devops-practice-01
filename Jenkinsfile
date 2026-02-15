@@ -27,7 +27,11 @@ pipeline {
                 // in both Declarative and Scripted Jenkins Pipelines.
                 echo 'Building the code using maven'
                 sh 'ls -la'
-                // sh 'mvn -B -DskipTests clean package'
+                sh '''
+                    cd Java-Login-App
+                    mvn -B -DskipTests clean package
+                    
+                    '''
                 // Add your deployment commands here, e.g., sh './deploy.sh'
             }
         }
