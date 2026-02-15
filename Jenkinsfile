@@ -9,10 +9,11 @@ pipeline {
                 url: 'https://github.com/rajudonkeshwar/devops-practice-01.git'
             }
         }
-        stage('Test') {
+        stage('Checking the files inside my git folder') {
             steps {
-                echo 'Running tests...'
-                // Add your test commands here, e.g., sh 'mvn test'
+                    // Find all files in the current workspace
+                    def files = findFiles(glob: '**/*.*')
+                    echo "Found ${files.length} files."
             }
         }
         stage('Deploy') {
