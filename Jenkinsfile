@@ -30,9 +30,21 @@ pipeline {
                 sh '''
                     cd Java-Login-App
                     mvn -B -DskipTests clean package
-                    
+                    cd ls -la
+
                     '''
                 // Add your deployment commands here, e.g., sh './deploy.sh'
+            }
+        }
+
+
+        stage('Building The Docker Image') {
+            steps {
+                script {
+                    // Builds the image using the Dockerfile in the current directory
+                    // and assigns it to a variable 'dockerImage'
+                    dockerImage = docker.build("${REGISTRY_IMAGE}:${IMAGE_TAG}") 
+                }
             }
         }
     }
