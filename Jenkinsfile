@@ -24,8 +24,9 @@ pipeline {
                 // Yes, the sh command is a fundamental Pipeline step that can be used 
                 // in both Declarative and Scripted Jenkins Pipelines.
                 echo 'Building the code using maven'
-                sh ' cd Java-Login-App '
-                sh 'mvn -B -DskipTests clean package'
+                sh 'cd Java-Login-App'
+                sh 'pwd'
+                // sh 'mvn -B -DskipTests clean package'
                 // Add your deployment commands here, e.g., sh './deploy.sh'
             }
         }
