@@ -11,9 +11,11 @@ pipeline {
         }
         stage('Checking the files inside my git folder') {
             steps {
+                    script {
                     // Find all files in the current workspace
                     def files = findFiles(glob: '**/*.*')
                     echo "Found ${files.length} files."
+                    }
             }
         }
         stage('Deploy') {
