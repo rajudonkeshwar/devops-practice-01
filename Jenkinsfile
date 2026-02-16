@@ -10,6 +10,7 @@ pipeline {
     }
 
     stages {
+
         stage('Check Out The Code') {
             steps {
                 echo 'In this stage code will be cloned'
@@ -74,15 +75,10 @@ pipeline {
                         exit 1
                     fi
                 fi
-                
+
                 '''
-            
         }
-
         }
-    }
-
-
 
 
         stage('Docker Build') {
