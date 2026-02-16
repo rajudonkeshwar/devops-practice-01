@@ -5,6 +5,7 @@ pipeline {
     environment {
         ACC_ID = "521992171924"
         REPOSITORY = "java-app"
+        project = "java-login"
         appVersion = "latest"
         REGISTRY = "${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com"
     }
