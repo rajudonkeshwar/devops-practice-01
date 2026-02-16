@@ -18,17 +18,18 @@ pipeline {
                 sh 'pwd'
             }
         }
-        stage('Checking the files inside my git folder') {
-            steps {
-                    // If you want to mention groovy code then you should use script block
-                    script {
-                    // Find all files in the current workspace
-                    def files = findFiles(glob: '**/*.*')
-                    echo "Found ${files.length} files."
-                    sh 'pwd'
-                    }
-            }
-        }
+        // stage('Checking the files inside my git folder') {
+        //     steps {
+        //             // If you want to mention groovy code then you should use script block
+        //             script {
+        //             // Find all files in the current workspace
+        //             def files = findFiles(glob: '**/*.*')
+        //             echo "Found ${files.length} files."
+        //             sh 'pwd'
+        //             }
+        //     }
+        // }
+
         stage('build') {
             steps {
                 // Yes, the sh command is a fundamental Pipeline step that can be used 
@@ -54,6 +55,34 @@ pipeline {
         //         }
         //     }
         // }
+
+        stage('Checking the Docker Status') {
+            steps {
+                
+                sh '''
+
+                if systemctl is-active --quiet docker; then
+                    echo "Docker is already running "
+                else
+                    echo "Docker is not running. Starting Docker..."
+                    sudo systemctl start docker
+
+                    if systemctl is-active --quiet docker; then
+                        echo "Docker started successfully "
+                    else
+                        echo "Failed to start Docker "
+                        exit 1
+                    fi
+                fi
+                
+                '''
+            
+        }
+
+        }
+    }
+
+
 
 
         stage('Docker Build') {
