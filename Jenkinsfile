@@ -107,7 +107,7 @@ pipeline {
                     sh """
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${REGISTRY}
 
-                    docker run -itd -p 8082:8080 --name java-app ${REGISTRY}/${REPOSITORY}:${appVersion}
+                    docker run -itd -p 8082:8080 --name java-app1 ${REGISTRY}/${REPOSITORY}:${appVersion}
 
                     docker ps -a
                     """
