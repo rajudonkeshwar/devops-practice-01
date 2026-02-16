@@ -6,8 +6,7 @@ pipeline {
         ACC_ID = "521992171924"
         REPOSITORY = "java-app"
         appVersion = "latest"
-        REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com"
-        REGISTRY_IMAGE = "${REGISTRY}/${REPOSITORY}"
+        REGISTRY = "${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com"
     }
 
     stages {
@@ -62,11 +61,11 @@ pipeline {
                script{
                 withAWS(region: 'us-east-1', credentials: 'aws-creds') {
                     sh """
-                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
+                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${REGISTRY}
 
-                    docker build -t  ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${project}:${appVersion} .
+                    docker build -t  ${REGISTRY}/${project}:${appVersion} .
 
-                    docker push ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${project}:${appVersion}
+                    docker push ${REGISTRY}/${project}:${appVersion}
                     """
                 }
                  
