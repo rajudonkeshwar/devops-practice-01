@@ -57,28 +57,28 @@ pipeline {
         //     }
         // }
 
-        stage('Checking the Docker Status') {
-            steps {
+        // stage('Checking the Docker Status') {
+        //     steps {
                 
-                sh '''
+        //         sh '''
 
-                if sudo systemctl is-active --quiet docker; then
-                    echo "Docker is already running "
-                else
-                    echo "Docker is not running. Starting Docker..."
-                    sudo systemctl start docker
+        //         if sudo systemctl is-active --quiet docker; then
+        //             echo "Docker is already running "
+        //         else
+        //             echo "Docker is not running. Starting Docker..."
+        //             sudo systemctl start docker
 
-                    if sudo systemctl is-active --quiet docker; then
-                        echo "Docker started successfully "
-                    else
-                        echo "Failed to start Docker "
-                        exit 1
-                    fi
-                fi
+        //             if sudo systemctl is-active --quiet docker; then
+        //                 echo "Docker started successfully "
+        //             else
+        //                 echo "Failed to start Docker "
+        //                 exit 1
+        //             fi
+        //         fi
 
-                '''
-        }
-        }
+        //         '''
+        // }
+        // }
 
 
         stage('Docker Build') {
