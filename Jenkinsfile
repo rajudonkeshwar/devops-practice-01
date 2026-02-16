@@ -5,7 +5,6 @@ pipeline {
     environment {
         ACC_ID = "521992171924"
         REPOSITORY = "java-app"
-        project = "java-login"
         appVersion = "latest"
         REGISTRY = "${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com"
     }
@@ -64,9 +63,9 @@ pipeline {
                     sh """
                     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${REGISTRY}
 
-                    docker build -t  ${REGISTRY}/${project}:${appVersion} .
+                    docker build -t  ${REGISTRY}/${REPOSITORY}:${appVersion} .
 
-                    docker push ${REGISTRY}/${project}:${appVersion}
+                    docker push ${REGISTRY}/${REPOSITORY}:${appVersion}
                     """
                 }
                  
