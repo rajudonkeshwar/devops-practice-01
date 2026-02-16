@@ -5,7 +5,7 @@ pipeline {
     environment {
         ACC_ID = "521992171924"
         REPOSITORY = "java-app"
-        appVersion = "latest"
+        appVersion = "${env.BUILD_NUMBER}"
         REGISTRY = "${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com"
     }
 
@@ -91,6 +91,25 @@ pipeline {
                     docker build -t  ${REGISTRY}/${REPOSITORY}:${appVersion} .
 
                     docker push ${REGISTRY}/${REPOSITORY}:${appVersion}
+                    """
+                }
+                 
+               }
+            }
+        }
+
+
+
+    stage('deploy the image in docker container') {
+            steps {
+               script{
+                withAWS(region: 'us-east-1', credentials: 'aws-creds') {
+                    sh """
+                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${REGISTRY}
+
+                    docker run -itd --name java-app ${REGISTRY}/${REPOSITORY}:${appVersion}
+
+                    docker ps -a
                     """
                 }
                  
