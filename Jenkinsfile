@@ -1,6 +1,15 @@
 // Jenkinsfile (Declarative Pipeline)
 pipeline {
     agent any // Specifies where the entire pipeline will run
+
+    environment {
+        ACC_ID = "521992171924"
+        REPOSITORY = "java-app"
+        appVersion = "latest"
+        REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com"
+        REGISTRY_IMAGE = "${REGISTRY}/${REPOSITORY}"
+    }
+
     stages {
         stage('Check Out The Code') {
             steps {
@@ -37,16 +46,35 @@ pipeline {
         }
 
 
-        stage('Building The Docker Image') {
+        // stage('Building The Docker Image') {
+        //     steps {
+        //         script {
+        //             // Builds the image using the Dockerfile in the current directory
+        //             // and assigns it to a variable 'dockerImage'
+        //             dockerImage = docker.build("${REGISTRY_IMAGE}:${IMAGE_TAG}")
+        //         }
+        //     }
+        // }
+
+
+        stage('Docker Build') {
             steps {
-                script {
-                    // Builds the image using the Dockerfile in the current directory
-                    // and assigns it to a variable 'dockerImage'
-                    dockerImage = docker.build("${REGISTRY_IMAGE}:${IMAGE_TAG}") 
+               script{
+                withAWS(region: 'us-east-1', credentials: 'aws-creds') {
+                    sh """
+                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com
+
+                    docker build -t  ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${project}:${appVersion} .
+
+                    docker push ${ACC_ID}.dkr.ecr.us-east-1.amazonaws.com/${project}:${appVersion}
+                    """
                 }
+                 
+               }
             }
         }
     }
+
     post { // Actions to run after the pipeline finishes
         always {
             echo 'Pipeline finished.'
